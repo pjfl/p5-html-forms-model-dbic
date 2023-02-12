@@ -15,7 +15,15 @@ my $prereqs  = {
     'version' => '0.88'
   },
   'requires' => {
-    'Class::Usul' => 'v0.65.0',
+    'DBIx::Class' => '0.082843',
+    'DBIx::Class::ResultSet::RecursiveUpdate' => '0.42',
+    'HTML::Forms' => 'v0.1.9',
+    'Moo' => '2.005005',
+    'MooX::HandlesVia' => '0.001009',
+    'Ref::Util' => '0.204',
+    'Type::Tiny' => '2.002001',
+    'Unexpected' => 'v1.0.1',
+    'namespace::autoclean' => '0.29',
     'perl' => '5.010001'
   },
   'test_requires' => {
@@ -42,7 +50,7 @@ my $stop     = sub {
 # Not interested in reports below min perl ver
 $] < $perl_ver and $stop->( "Minimum required Perl version is ${perl_ver}" );
 
-Module::Build->new(
+Module::Build->subclass( code => do { local $/; <DATA> } )->new(
    'module_name' => $name,
    'notes'       => { min_perl_version => $perl_ver, testing => $testing->() },
    %{ $prereqs },
@@ -50,3 +58,13 @@ Module::Build->new(
 )->create_build_script;
 
 exit 0;
+
+__DATA__
+
+sub _added_to_INC { # CVE-2016-1238
+  my $self = shift; my %seen;
+
+  for ($self->_default_INC) { $seen{ $_ }++ }
+
+  return grep { not $seen{ $_ }++ } $self->base_dir, @INC;
+}

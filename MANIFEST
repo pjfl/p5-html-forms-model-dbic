@@ -2,6 +2,7 @@ Build.PL
 Changes
 MANIFEST
 lib/HTML/Forms/Model/DBIC.pm
+lib/HTML/Forms/Role/Model/DBIC.pm
 t/02pod.t
 t/03podcoverage.t
 t/05kwalitee.t
