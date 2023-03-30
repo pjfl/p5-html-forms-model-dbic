@@ -1,5 +1,7 @@
 Revision history for HTML::Forms::Model::DBIC
 
+          - Adds lookup_label!
+          - Works with HTML::Forms MCat server
           - Updated metadata
           - Added role and model codes
 

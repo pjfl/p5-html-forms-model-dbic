@@ -11,6 +11,13 @@ use DBIx::Class::ResultSet::RecursiveUpdate;
 use Moo::Role;
 use MooX::HandlesVia;
 
+has 'rec_update_flags' =>
+   is          => 'ro',
+   isa         => HashRef,
+   builder     => '_build_rec_update_flags',
+   handles_via => 'Hash',
+   handles     => { set_rec_update_flag => 'set' };
+
 has 'schema' => is => 'rw', isa => class_type('DBIx::Class::Schema');
 
 has 'source_name' => is => 'lazy', isa => Str, builder => 'build_source_name';
@@ -26,15 +33,6 @@ has 'unique_constraints' =>
    };
 
 has 'unique_messages' => is => 'ro', isa => HashRef, default => sub { {} };
-
-has 'rec_update_flags' =>
-   is          => 'ro',
-   isa         => HashRef,
-   builder     => '_build_rec_update_flags',
-   handles_via => 'Hash',
-   handles     => {
-      set_rec_update_flag => 'set',
-   };
 
 sub build_item {
    my $self    = shift;
@@ -90,6 +88,14 @@ sub init_value {
    $field->init_value($value);
    $field->value($value);
    return;
+}
+
+sub lookup_label {
+   my ($self, $name) = @_;
+
+   my $info = $self->resultset->result_source->columns_info->{$name};
+
+   return $info ? $info->{label} : undef;
 }
 
 sub lookup_options {
