@@ -1,5 +1,6 @@
 Revision history for HTML::Forms::Model::DBIC
 
+          - Moves active_column here from StateTable
           - Adds lookup_label!
           - Works with HTML::Forms MCat server
           - Updated metadata

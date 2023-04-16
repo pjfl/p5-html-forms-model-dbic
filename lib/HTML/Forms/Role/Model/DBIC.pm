@@ -11,6 +11,8 @@ use DBIx::Class::ResultSet::RecursiveUpdate;
 use Moo::Role;
 use MooX::HandlesVia;
 
+has 'active_column' => is => 'ro', isa => Str, default => 'active';
+
 has 'rec_update_flags' =>
    is          => 'ro',
    isa         => HashRef,
