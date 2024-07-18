@@ -147,7 +147,7 @@ sub lookup_options {
       my @or = ($active_col => TRUE);
 
       push @or, ("${primary_key}" => $field->init_value)
-         if $self->item && defined $self->init_value;
+         if $self->item && defined $field->init_value;
       $criteria->{'-or'} = \@or;
    }
 
