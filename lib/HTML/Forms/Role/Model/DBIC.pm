@@ -321,7 +321,7 @@ sub validate_unique {
 
       my $field_error = $self->unique_message_for_constraint($constraint);
 
-      $field->add_error($field_error, $constraint);
+      $field->add_error($field_error, $self->_constraint_text($constraint));
       $found_error++;
    }
 
@@ -330,6 +330,15 @@ sub validate_unique {
 
 sub _build_rec_update_flags {
    return { unknown_params_ok => TRUE };
+}
+
+sub _constraint_text {
+   my ($self, $constraint) = @_;
+
+   (my $text = $constraint) =~ s{ _uniq \z }{}mx;
+   $text =~ s{ _ }{ }gmx;
+
+   return $text;
 }
 
 sub _fix_value {
