@@ -1,5 +1,6 @@
 Revision history for HTML::Forms::Model::DBIC
 
+          - Fix lookup_options to work with overload string result classes
           - Better constraint error text
           - Bug fix in lookup_options field init_value
           - Moves active_column here from StateTable

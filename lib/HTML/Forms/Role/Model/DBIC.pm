@@ -117,7 +117,7 @@ sub lookup_options {
       my $resultset  = $self_source->resultset;
       my $new_result = $resultset->new_result({});
 
-      if ($new_result && $new_result->can("add_to_${accessor}")) {
+      if (defined $new_result && $new_result->can($accessor)) {
          $source = $new_result->$accessor->result_source;
       }
    }
